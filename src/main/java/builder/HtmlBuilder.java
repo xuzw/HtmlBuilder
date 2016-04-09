@@ -6,7 +6,7 @@ import java.util.*;
  * Created by Josh on 5/04/2016.
  */
 public class HtmlBuilder {
-    private final HtmlBuilder parent;
+    private HtmlBuilder parent;
     private final int depth;
     private final String tagname;
     private final String textNode;
@@ -42,7 +42,17 @@ public class HtmlBuilder {
     }
 
     public HtmlBuilder appendAll(List<HtmlBuilder> builders) {
-        children.addAll(builders);
+        builders.forEach(builder -> append(builder));
+        return this;
+    }
+
+    public HtmlBuilder append(HtmlBuilder builder) {
+        children.add(builder.setParent(this));
+        return this;
+    }
+
+    private HtmlBuilder setParent(HtmlBuilder parent) {
+        this.parent = parent;
         return this;
     }
 
