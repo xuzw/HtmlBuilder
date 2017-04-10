@@ -1,4 +1,4 @@
-package builder;
+package com.github.xuzw.html_builder;
 
 /**
  * Created by Josh on 5/04/2016.
@@ -7,12 +7,12 @@ public class Runner {
     public static void main(String[] args) {
         HtmlBuilder root = new HtmlBuilder();
         root
-            .nest("!DOCTYPE").attr("html").parent()
-            .nest("html")
+            .child("!DOCTYPE").attr("html").parent()
+            .child("html")
                 .append("head")
-                .nest("body").attr("onload", "alert()")
+                .child("body").attr("onload", "alert()")
                     .append("h1", "Heading")
-                    .nest("p").cssClass("paragraph")
+                    .child("p").cssClass("paragraph")
                         .text("Here is some bold text: ")
                         .append("b", "Bold Text")
                         .text(" The End.")

@@ -1,14 +1,19 @@
-package builder;
+package com.github.xuzw.html_builder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Created by Josh on 5/04/2016.
+ * @author 徐泽威 xuzewei_2012@126.com
+ * @time 2017年4月10日 上午10:58:50
  */
 public class HtmlBuilder {
     private HtmlBuilder parent;
     private final int depth;
-    private final String tagname;
+    private final String tagName;
     private final String textNode;
     private static final List<String> IMMEDIATE_CLOSE = Arrays.asList("img", "meta", "!DOCTYPE");
     private final List<HtmlBuilder> children = new ArrayList<>();
@@ -18,26 +23,26 @@ public class HtmlBuilder {
         this(null, null, null);
     }
 
-    private HtmlBuilder(HtmlBuilder parent, String tagname, String textNode) {
+    private HtmlBuilder(HtmlBuilder parent, String tagName, String textNode) {
         this.parent = parent;
-        this.tagname = tagname;
+        this.tagName = tagName;
         this.textNode = textNode;
         this.depth = parent != null ? parent.depth + 1 : -1;
     }
 
-    public HtmlBuilder nest(String tagname) {
-        HtmlBuilder builder = new HtmlBuilder(this, tagname, null);
+    public HtmlBuilder child(String tagName) {
+        HtmlBuilder builder = new HtmlBuilder(this, tagName, null);
         children.add(builder);
         return builder;
     }
 
-    public HtmlBuilder append(String tagname) {
-        nest(tagname);
+    public HtmlBuilder append(String tagName) {
+        child(tagName);
         return this;
     }
 
-    public HtmlBuilder append(String tagname, String text) {
-        nest(tagname).text(text);
+    public HtmlBuilder append(String tagName, String text) {
+        child(tagName).text(text);
         return this;
     }
 
@@ -99,11 +104,11 @@ public class HtmlBuilder {
         final StringBuilder html = new StringBuilder();
         final String indentation = getIndentation();
         final boolean indentChildren = !hasTextChildren();
-        if (tagname != null) {
+        if (tagName != null) {
             if (indent) {
                 html.append(indentation);
             }
-            html.append('<').append(tagname);
+            html.append('<').append(tagName);
             for (String attrKey : attributes.keySet()) {
                 html.append(' ').append(attrKey);
                 final String value = attributes.get(attrKey);
@@ -111,7 +116,7 @@ public class HtmlBuilder {
                     html.append('=').append('"').append(value).append('"');
                 }
             }
-            if (IMMEDIATE_CLOSE.contains(tagname)) {
+            if (IMMEDIATE_CLOSE.contains(tagName)) {
                 return html.append("/>").toString();
             }
             html.append('>');
@@ -124,11 +129,11 @@ public class HtmlBuilder {
             }
             html.append(builder.build(indentChildren));
         }
-        if (tagname != null) {
+        if (tagName != null) {
             if (indentChildren) {
                 html.append('\n').append(indentation);
             }
-            html.append("</").append(tagname).append('>');
+            html.append("</").append(tagName).append('>');
         }
         return html.toString();
     }
