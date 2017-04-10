@@ -16,17 +16,17 @@ System.out.println(root.build());
 
 Create a slightly more complex structure. See that indentation (or non-indentation) is handled automatically. For certain elements (img, meta, !DOCTYPE) - these are even auto-closed, such that you do not have (for example) `<img src='image.jpg'></img>` but rather: `<img src='image.jpg'/>`
 
-Note: `nest(x)` will return the nested element (to add more elements under it), wheras `append(x)` will simply append the element as a child, allowing you to append multiple children to the same element.
+Note: `child(x)` will return the nested element (to add more elements under it), wheras `append(x)` will simply append the element as a child, allowing you to append multiple children to the same element.
 
 ```
 HtmlBuilder root = new HtmlBuilder();
-root.nest("html")
-      .nest("!DOCTYPE").attr("html").parent()           // .parent() will return the parent of the nested element (ie. "html")
+root.child("html")
+      .child("!DOCTYPE").attr("html").parent()           // .parent() will return the parent of the nested element (ie. "html")
       .append("head")
-      .nest("body").attr("onload", "alert('loaded')")
-        .append("h1", "Initial Heading")                // Shortcut for .nest("h1").text("Initial Heading").parent()
+      .child("body").attr("onload", "alert('loaded')")
+        .append("h1", "Initial Heading")                // Shortcut for .child("h1").text("Initial Heading").parent()
         .append("p", "Paragraph one")
-        .nest("p").cssClass("paragraph-class")          // Shortcut for .attr("class", "paragraph-class")
+        .child("p").cssClass("paragraph-class")          // Shortcut for .attr("class", "paragraph-class")
           .text("Here is some bold text: ")             // A text node
           .append("b", "BOLD TEXT")
           .text(" The End")
