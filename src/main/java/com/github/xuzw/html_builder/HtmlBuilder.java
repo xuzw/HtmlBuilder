@@ -15,7 +15,7 @@ public class HtmlBuilder {
     private final int depth;
     private final String tagName;
     private final String textNode;
-    private static final List<String> IMMEDIATE_CLOSE = Arrays.asList("link", "img", "meta", "!DOCTYPE");
+    private static final List<String> IMMEDIATE_CLOSE = Arrays.asList("input", "link", "img", "meta", "!DOCTYPE");
     private final List<HtmlBuilder> children = new ArrayList<>();
     private final Map<String, String> attributes = new HashMap<>();
 
