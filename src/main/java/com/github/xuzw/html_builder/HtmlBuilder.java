@@ -91,6 +91,26 @@ public class HtmlBuilder {
         return attr("href", value);
     }
 
+    public HtmlBuilder label() {
+        return child("label");
+    }
+
+    public HtmlBuilder input() {
+        return child("input").attr("type", "text");
+    }
+
+    public HtmlBuilder button() {
+        return child("input").attr("type", "button");
+    }
+
+    public HtmlBuilder onClick(String value) {
+        return attr("onclick", value);
+    }
+
+    public HtmlBuilder value(String value) {
+        return attr("value", value);
+    }
+
     public HtmlBuilder text(String value) {
         children.add(new HtmlBuilder(this, null, value));
         return this;
