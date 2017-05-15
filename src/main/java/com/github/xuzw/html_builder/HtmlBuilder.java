@@ -111,6 +111,10 @@ public class HtmlBuilder {
         return attr("value", value);
     }
 
+    public HtmlBuilder data(String name, String value) {
+        return attr("data-" + name, value);
+    }
+
     public HtmlBuilder text(String value) {
         children.add(new HtmlBuilder(this, null, value));
         return this;
